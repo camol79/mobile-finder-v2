@@ -109,12 +109,13 @@ Find Best Mobile
 
 <script src="mobiles.js"></script>
 
+<script>
+
 function findMobile(){
 
 const budget=document.getElementById("budget").value;
 const brand=document.getElementById("brand").value;
 const camera=document.getElementById("camera").value;
-const display=document.getElementById("display").value;
 const ram=document.getElementById("ram").value;
 const storage=document.getElementById("storage").value;
 
@@ -173,10 +174,10 @@ Storage: ${m.storage}
 
 });
 
-document.getElementById("result").innerText =
-output;
+document.getElementById("result").innerText = output;
 
 }
+
 </script>
 
 </body>
