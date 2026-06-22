@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mobile Buying Advisor</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+max-width:800px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+text-align:center;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+select,button{
+width:100%;
+padding:10px;
+margin-top:5px;
+}
+
+button{
+margin-top:20px;
+cursor:pointer;
+}
+
+#result{
+margin-top:20px;
+padding:15px;
+border:1px solid #ddd;
+white-space:pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📱 Mobile Buying Advisor</h1>
+
+<label>Budget</label>
+<select id="budget">
+<option>Under ₹15,000</option>
+<option>₹15,000 - ₹25,000</option>
+<option>₹25,000 - ₹40,000</option>
+<option>Above ₹40,000</option>
+</select>
+
+<label>Brand</label>
+<select id="brand">
+<option>Any Brand</option>
+<option>Samsung</option>
+<option>Apple</option>
+<option>OnePlus</option>
+<option>Xiaomi</option>
+<option>Realme</option>
+<option>Vivo</option>
+<option>Oppo</option>
+<option>Motorola</option>
+<option>Nothing</option>
+</select>
+
+<label>Camera Quality</label>
+<select id="camera">
+<option>Basic</option>
+<option>Good</option>
+<option>Excellent</option>
+</select>
+
+<label>Display Quality</label>
+<select id="display">
+<option>HD+</option>
+<option>Full HD+</option>
+<option>AMOLED</option>
+<option>120Hz AMOLED</option>
+<option>Premium Flagship Display</option>
+</select>
+
+<label>RAM</label>
+<select id="ram">
+<option>4GB</option>
+<option>6GB</option>
+<option>8GB</option>
+<option>12GB</option>
+<option>16GB</option>
+</select>
+
+<label>Storage</label>
+<select id="storage">
+<option>64GB</option>
+<option>128GB</option>
+<option>256GB</option>
+<option>512GB</option>
+</select>
+
+<button onclick="findMobile()">
+Find Best Mobile
+</button>
+
+<div id="result"></div>
+
+<script>
+
+async function findMobile(){
+
+const budget=document.getElementById("budget").value;
+const brand=document.getElementById("brand").value;
+const camera=document.getElementById("camera").value;
+const display=document.getElementById("display").value;
+const ram=document.getElementById("ram").value;
+const storage=document.getElementById("storage").value;
+
+document.getElementById("result").innerHTML =
+"Searching for best mobiles...";
+
+const response = await fetch(
+"/.netlify/functions/mobile",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+budget,
+brand,
+camera,
+display,
+ram,
+storage
+})
+}
+);
+
+const data = await response.json();
+
+document.getElementById("result").innerText =
+data.result;
+
+}
+
+</script>
+
+</body>
+</html>
