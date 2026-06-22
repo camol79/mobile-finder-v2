@@ -142,8 +142,7 @@ storage
 const data = await response.json();
 
 document.getElementById("result").innerText =
-data.answer;
-
+JSON.stringify(data, null, 2);
 }
 
 </script>
