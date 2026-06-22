@@ -109,7 +109,7 @@ Find Best Mobile
 
 <script src="mobiles.js"></script>
 
-async function findMobile(){
+function findMobile(){
 
 const budget=document.getElementById("budget").value;
 const brand=document.getElementById("brand").value;
@@ -118,33 +118,65 @@ const display=document.getElementById("display").value;
 const ram=document.getElementById("ram").value;
 const storage=document.getElementById("storage").value;
 
-document.getElementById("result").innerHTML =
-"Searching for best mobiles...";
+let results = mobiles.filter(m => {
 
-const response = await fetch(
-"/.netlify/functions/mobile",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-budget,
-brand,
-camera,
-display,
-ram,
-storage
-})
-}
+let budgetMatch = false;
+
+if(budget==="Under ₹15,000")
+budgetMatch = m.price <= 15000;
+
+else if(budget==="₹15,000 - ₹25,000")
+budgetMatch = m.price > 15000 && m.price <= 25000;
+
+else if(budget==="₹25,000 - ₹40,000")
+budgetMatch = m.price > 25000 && m.price <= 40000;
+
+else
+budgetMatch = m.price > 40000;
+
+return (
+budgetMatch &&
+(brand==="Any Brand" || m.brand===brand) &&
+m.camera===camera &&
+m.ram===ram &&
+m.storage===storage
 );
 
-const data = await response.json();
+});
 
-document.getElementById("result").innerText =
-JSON.stringify(data, null, 2);
+if(results.length===0){
+
+document.getElementById("result").innerHTML =
+"No matching mobile found.";
+
+return;
+
 }
 
+let output="";
+
+results.forEach(m => {
+
+output +=
+`📱 ${m.name}
+
+Brand: ${m.brand}
+Price: ₹${m.price}
+Camera: ${m.camera}
+Display: ${m.display}
+RAM: ${m.ram}
+Storage: ${m.storage}
+
+-----------------------
+
+`;
+
+});
+
+document.getElementById("result").innerText =
+output;
+
+}
 </script>
 
 </body>
