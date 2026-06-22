@@ -42,12 +42,10 @@ Give:
     );
 
     const result = await response.json();
-
+    console.log(JSON.stringify(result));
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        answer: result.choices[0].message.content
-      })
+      body: JSON.stringify(result)
     };
 
   } catch (error) {
